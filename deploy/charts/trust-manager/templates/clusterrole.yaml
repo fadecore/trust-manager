@@ -1,3 +1,4 @@
+{{- if .Values.rbac.create }}
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -43,14 +44,14 @@ rules:
   - "events"
   verbs: ["create", "patch"]
 
-{{- if .Values.secretTargets.enabled }}
-{{- if .Values.secretTargets.authorizedSecretsAll }}
+{{- if .Values.rbac.secretTargets.enabled }}
+{{- if .Values.rbac.secretTargets.authorizedSecretsAll }}
 - apiGroups:
   - ""
   resources:
   - "secrets"
   verbs: ["get", "list", "create", "patch", "watch", "delete"]
-{{- else if .Values.secretTargets.authorizedSecrets }}
+{{- else if .Values.rbac.secretTargets.authorizedSecrets }}
 - apiGroups:
   - ""
   resources:
@@ -61,6 +62,7 @@ rules:
   resources:
   - "secrets"
   verbs: ["create", "patch", "delete"]
-  resourceNames: {{ .Values.secretTargets.authorizedSecrets | toYaml | nindent 2 }}
+  resourceNames: {{ .Values.rbac.secretTargets.authorizedSecrets | toYaml | nindent 2 }}
 {{- end -}}
 {{- end -}}
+{{- end }}

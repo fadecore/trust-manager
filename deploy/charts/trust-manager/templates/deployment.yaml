@@ -91,7 +91,7 @@ spec:
           {{- if .Values.defaultPackage.enabled }}
           - "--default-package-location=/packages/cert-manager-package-debian.json"
           {{- end }}
-          {{- if .Values.secretTargets.enabled }}
+          {{- if .Values.rbac.secretTargets.enabled }}
           - "--secret-targets-enabled=true"
           {{- end }}
           {{- if .Values.filterExpiredCertificates.enabled }}

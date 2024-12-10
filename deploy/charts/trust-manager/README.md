@@ -179,14 +179,21 @@ digest: sha256:0e072dddd1f7f8fc8909a2ca6f65e76c5f0d2fcfb8be47935ae3457e8bbceb20
 > ```
 
 imagePullPolicy for the default package image.
-#### **secretTargets.enabled** ~ `bool`
+#### **rbac.create** ~ `bool`
+> Default value:
+> ```yaml
+> true
+> ```
+
+Create required ClusterRole and ClusterRoleBinding for trust-manager.
+#### **rbac.secretTargets.enabled** ~ `bool`
 > Default value:
 > ```yaml
 > false
 > ```
 
 If set to true, enable writing trust bundles to Kubernetes Secrets as a target. trust-manager can only write to secrets which are explicitly allowed via either authorizedSecrets or authorizedSecretsAll. Note that enabling secret targets will grant trust-manager read access to all secrets in the cluster.
-#### **secretTargets.authorizedSecretsAll** ~ `bool`
+#### **rbac.secretTargets.authorizedSecretsAll** ~ `bool`
 > Default value:
 > ```yaml
 > false
@@ -194,7 +201,7 @@ If set to true, enable writing trust bundles to Kubernetes Secrets as a target. 
 
 If set to true, grant read/write permission to all secrets across the cluster. Use with caution!  
 If set, ignores the authorizedSecrets list.
-#### **secretTargets.authorizedSecrets** ~ `array`
+#### **rbac.secretTargets.authorizedSecrets** ~ `array`
 > Default value:
 > ```yaml
 > []

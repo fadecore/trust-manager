@@ -47,7 +47,7 @@ endif
 test-smoke-deps: INSTALL_OPTIONS :=
 test-smoke-deps: INSTALL_OPTIONS += --set image.repository=$(oci_manager_image_name_development)
 test-smoke-deps: INSTALL_OPTIONS += --set defaultPackageImage.repository=$(oci_package_debian_image_name_development)
-test-smoke-deps: INSTALL_OPTIONS += --set secretTargets.enabled=true --set secretTargets.authorizedSecretsAll=true
+test-smoke-deps: INSTALL_OPTIONS += --set rbac.secretTargets.enabled=true --set rbac.secretTargets.authorizedSecretsAll=true
 test-smoke-deps: smoke-setup-cert-manager
 test-smoke-deps: install
 

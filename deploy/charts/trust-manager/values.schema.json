@@ -54,8 +54,8 @@
         "resources": {
           "$ref": "#/$defs/helm-values.resources"
         },
-        "secretTargets": {
-          "$ref": "#/$defs/helm-values.secretTargets"
+        "rbac": {
+          "$ref": "#/$defs/helm-values.rbac"
         },
         "tolerations": {
           "$ref": "#/$defs/helm-values.tolerations"
@@ -673,33 +673,50 @@
       "description": "Kubernetes pod resource limits for trust.\n\nFor example:\nresources:\n  limits:\n    cpu: 100m\n    memory: 128Mi\n  requests:\n    cpu: 100m\n    memory: 128Mi",
       "type": "object"
     },
-    "helm-values.secretTargets": {
+    "helm-values.rbac": {
       "additionalProperties": false,
       "properties": {
-        "authorizedSecrets": {
-          "$ref": "#/$defs/helm-values.secretTargets.authorizedSecrets"
+        "create": {
+          "$ref": "#/$defs/helm-values.rbac.create"
         },
-        "authorizedSecretsAll": {
-          "$ref": "#/$defs/helm-values.secretTargets.authorizedSecretsAll"
-        },
-        "enabled": {
-          "$ref": "#/$defs/helm-values.secretTargets.enabled"
+        "secretTargets": {
+          "$ref": "#/$defs/helm-values.rbac.secretTargets"
         }
       },
       "type": "object"
     },
-    "helm-values.secretTargets.authorizedSecrets": {
+    "helm-values.rbac.create": {
+      "default": true,
+      "description": "Create required ClusterRole and ClusterRoleBinding for trust-manager.",
+      "type": "boolean"
+    },
+    "helm-values.rbac.secretTargets": {
+      "additionalProperties": false,
+      "properties": {
+        "authorizedSecrets": {
+          "$ref": "#/$defs/helm-values.rbac.secretTargets.authorizedSecrets"
+        },
+        "authorizedSecretsAll": {
+          "$ref": "#/$defs/helm-values.rbac.secretTargets.authorizedSecretsAll"
+        },
+        "enabled": {
+          "$ref": "#/$defs/helm-values.rbac.secretTargets.enabled"
+        }
+      },
+      "type": "object"
+    },
+    "helm-values.rbac.secretTargets.authorizedSecrets": {
       "default": [],
       "description": "A list of secret names which trust-manager will be permitted to read and write across all namespaces. These are the only allowable Secrets that can be used as targets. If the list is empty (and authorizedSecretsAll is false), trust-manager can't write to secrets and can only read secrets in the trust namespace for use as sources.",
       "items": {},
       "type": "array"
     },
-    "helm-values.secretTargets.authorizedSecretsAll": {
+    "helm-values.rbac.secretTargets.authorizedSecretsAll": {
       "default": false,
       "description": "If set to true, grant read/write permission to all secrets across the cluster. Use with caution!\nIf set, ignores the authorizedSecrets list.",
       "type": "boolean"
     },
-    "helm-values.secretTargets.enabled": {
+    "helm-values.rbac.secretTargets.enabled": {
       "default": false,
       "description": "If set to true, enable writing trust bundles to Kubernetes Secrets as a target. trust-manager can only write to secrets which are explicitly allowed via either authorizedSecrets or authorizedSecretsAll. Note that enabling secret targets will grant trust-manager read access to all secrets in the cluster.",
       "type": "boolean"
